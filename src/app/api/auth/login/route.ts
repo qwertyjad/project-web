@@ -40,21 +40,24 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create a simple token (not secure, just for demo)
-    // This is a temporary solution until jsonwebtoken is properly installed
+    // Create JWT token
+    const jwt = require("jsonwebtoken");
     const payload = { id: user.id, email: user.email, name: user.name };
-    const base64Payload = Buffer.from(JSON.stringify(payload)).toString(
-      "base64",
+    const token = jwt.sign(
+      payload,
+      process.env.JWT_SECRET || "your-secret-key",
+      {
+        expiresIn: "30d", // Set to 30 days for persistent session
+      },
     );
-    const token = `header.${base64Payload}.signature`;
 
-    // Set cookie
+    // Set cookie with long expiration
     cookies().set({
       name: "auth_token",
       value: token,
       httpOnly: true,
       path: "/",
-      maxAge: 60 * 60 * 24, // 1 day
+      maxAge: 60 * 60 * 24 * 30, // 30 days
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
     });

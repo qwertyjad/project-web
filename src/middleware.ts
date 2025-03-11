@@ -28,8 +28,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Simple token check - we'll just check if it exists for now
-  // This is a temporary solution until jsonwebtoken is properly installed
+  // Token exists, allow the request to proceed
   return NextResponse.next();
 }
 

@@ -15,11 +15,10 @@ export function getUser(): User | null {
   }
 
   try {
-    // Simple parsing instead of verification
-    // This is a temporary solution until jsonwebtoken is properly installed
-    const base64Payload = token.split(".")[1];
-    const payload = Buffer.from(base64Payload, "base64").toString("utf8");
-    return JSON.parse(payload);
+    // Verify and decode the JWT token
+    const jwt = require("jsonwebtoken");
+    const user = jwt.verify(token, process.env.JWT_SECRET || "your-secret-key");
+    return user as User;
   } catch (error) {
     return null;
   }
