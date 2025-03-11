@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import UserMenu from "./UserMenu";
 import {
   Bell,
   Settings,
@@ -109,28 +110,7 @@ const Navbar = ({
               <Settings className="h-5 w-5" />
             </Button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="p-1">
-                  <Avatar>
-                    <AvatarImage src={userAvatar} alt={userName} />
-                    <AvatarFallback className="bg-blue-100 text-blue-600">
-                      {userName
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Log out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <UserMenu userName={userName} userAvatar={userAvatar} />
           </div>
 
           {/* Mobile menu button */}
@@ -206,6 +186,7 @@ const Navbar = ({
                 <Button variant="ghost" size="icon" aria-label="settings">
                   <Settings className="h-5 w-5" />
                 </Button>
+                <UserMenu userName={userName} userAvatar={userAvatar} />
               </div>
             </div>
           </div>
